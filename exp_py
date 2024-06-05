@@ -1,0 +1,254 @@
+from psychopy import visual, core, event, data, logging
+import random
+
+# Define the window
+win = visual.Window(fullscr=True, color=(0, 0, 0), units="pix")
+
+
+# Introduction Text Stimuli
+intro_text = visual.TextStim(win, pos=(0, 200), text="In this guessing game, you'll identify from which of two jars beads are being drawn based on their colors, red or yellow. To play, press 'space' to begin and view each bead individually. After seeing at least five beads, you may continue to draw more beads or choose to make your guess by pressing 'escape' and then selecting the jar you believe the beads are from. Take your time to make a confident decision. Have fun and good luck!", 
+                            color='white', height=30, wrapWidth=1000)
+
+# Instruction Text Stimuli
+info_text = visual.TextStim(win, pos=(0, -350), text="Press 'space' to start viewing beads.", color='white', height=30)
+
+# Display the introduction and instructions
+intro_text.draw()
+info_text.draw()
+win.flip()
+
+# Wait for space to start
+event.waitKeys(keyList=['space'])
+
+# Clear the screen before bead presentation
+win.flip()
+
+# Define beads and randomize
+beads = [
+    'yellow.png', 'yellow_copy.png', 'yellow_copy2.png', 'yellow_copy3.png',
+    'yellow_copy4.png', 'yellow_copy5.png', 'yellow_copy6.png', 'yellow_copy7.png',
+    'red.png', 'red_copy.png'
+]
+beads *= 2  # Ensure the list has 20 beads
+random.shuffle(beads)
+
+# Define the jar image for later use
+jar_image = visual.ImageStim(win, image='jar80.jpg', pos=(0, 0), size=(500, 500))
+
+
+# Main experiment loop
+info_text_jar = visual.TextStim(win, pos=(0, -450), text="Press 'space' to see the next bead or 'esc' after a minimum of 5 beads to make a decision.",
+                                color='white', height=30)
+
+bead_count = 0
+beads_seen = 0
+total_beads = len(beads)
+final_decision = ""
+
+# Clear event buffer to ensure responsive key presses
+event.clearEvents()
+
+while bead_count < len(beads):
+    # Show bead image
+    bead_image = visual.ImageStim(win, image=beads[bead_count], pos=(0, 100))
+    bead_image.draw()
+    beads_left_text = visual.TextStim(win, text=f"{total_beads - beads_seen} out of {total_beads} beads left", pos=(0, -300), color='white', height=30)
+    beads_left_text.draw()
+    info_text_jar.draw()
+    win.flip()
+
+    # Wait for response
+    keys = event.waitKeys(keyList=['space', 'escape'])
+    
+    # Handle response
+    if 'space' in keys:
+        beads_seen += 1
+        bead_count += 1
+    elif 'escape' in keys and beads_seen >= 5:
+        break
+
+# Decision making about the jar
+decision_text = visual.TextStim(win, text="Which jar do you think these beads are from? Press 'A' for Jar A or 'B' for Jar B",
+                                pos=(0, -350), color='white', height=30)
+jar_image.draw()  # Draw the jar image now at the end
+decision_text.draw()
+win.flip()
+
+# Record the final decision
+decision_keys = event.waitKeys(keyList=['a', 'b'])
+if 'a' in decision_keys:
+    final_decision = 'Jar A'
+elif 'b' in decision_keys:
+    final_decision = 'Jar B'
+
+# Show final decision
+result_text = visual.TextStim(win, text=f"Beads seen: {beads_seen}\nFinal decision: {final_decision}",
+                              pos=(0, -350), color='white', height=30)
+result_text.draw()
+win.flip()
+
+
+# Define the window
+win = visual.Window(fullscr=True, color=(0, 0, 0), units="pix")
+
+# Instruction Text Stimuli
+info_text = visual.TextStim(win, pos=(0, -350), text="Press 'space' to start viewing beads.", color='white', height=30)
+
+# Display the introduction and instructions
+intro_text.draw()
+info_text.draw()
+win.flip()
+
+# Wait for space to start
+event.waitKeys(keyList=['space'])
+
+# Clear the screen before bead presentation
+win.flip()
+
+# Define beads and randomize
+beads = [
+    'yellow.png', 'yellow_copy.png', 'red_copy2.png', 'red_copy3.png',
+    'yellow_copy4.png', 'yellow_copy5.png', 'yellow_copy6.png', 'yellow_copy7.png',
+    'red.png', 'red_copy.png'
+]
+beads *= 2  # Ensure the list has 20 beads
+random.shuffle(beads)
+
+# Define the jar image for later use
+jar_image = visual.ImageStim(win, image='jar70.jpeg', pos=(0, 0), size=(500, 500))
+
+
+# Main experiment loop
+info_text_jar = visual.TextStim(win, pos=(0, -450), text="Press 'space' to see the next bead or 'esc' after a minimum of 5 beads to make a decision.",
+                                color='white', height=30)
+
+bead_count = 0
+beads_seen = 0
+total_beads = len(beads)
+final_decision = ""
+
+# Clear event buffer to ensure responsive key presses
+event.clearEvents()
+
+while bead_count < len(beads):
+    # Show bead image
+    bead_image = visual.ImageStim(win, image=beads[bead_count], pos=(0, 100))
+    bead_image.draw()
+    beads_left_text = visual.TextStim(win, text=f"{total_beads - beads_seen} out of {total_beads} beads left", pos=(0, -300), color='white', height=30)
+    beads_left_text.draw()
+    info_text_jar.draw()
+    win.flip()
+
+    # Wait for response
+    keys = event.waitKeys(keyList=['space', 'escape'])
+    
+    # Handle response
+    if 'space' in keys:
+        beads_seen += 1
+        bead_count += 1
+    elif 'escape' in keys and beads_seen >= 5:
+        break
+
+# Decision making about the jar
+decision_text = visual.TextStim(win, text="Which jar do you think these beads are from? Press 'A' for Jar A or 'B' for Jar B",
+                                pos=(0, -350), color='white', height=30)
+jar_image.draw()  # Draw the jar image now at the end
+decision_text.draw()
+win.flip()
+
+# Record the final decision
+decision_keys = event.waitKeys(keyList=['a', 'b'])
+if 'a' in decision_keys:
+    final_decision = 'Jar A'
+elif 'b' in decision_keys:
+    final_decision = 'Jar B'
+
+# Show final decision
+result_text = visual.TextStim(win, text=f"Beads seen: {beads_seen}\nFinal decision: {final_decision}",
+                              pos=(0, -350), color='white', height=30)
+result_text.draw()
+win.flip()
+win.close()
+
+# Define the window
+win = visual.Window(fullscr=True, color=(0, 0, 0), units="pix")
+
+# Instruction Text Stimuli
+info_text = visual.TextStim(win, pos=(0, -350), text="Press 'space' to start viewing beads.", color='white', height=30)
+
+# Display the introduction and instructions
+intro_text.draw()
+info_text.draw()
+win.flip()
+
+# Wait for space to start
+event.waitKeys(keyList=['space'])
+
+# Clear the screen before bead presentation
+win.flip()
+
+# Define beads and randomize
+beads = [
+    'yellow.png', 'yellow_copy.png', 'red_copy2.png', 'red_copy3.png',
+    'red_copy4.png', 'red_copy5.png', 'yellow_copy6.png', 'yellow_copy7.png',
+    'red.png', 'red_copy.png'
+]
+beads *= 2  # Ensure the list has 20 beads
+random.shuffle(beads)
+
+# Define the jar image for later use
+jar_image = visual.ImageStim(win, image='jar60.jpeg', pos=(0, 0), size=(500, 500))
+
+
+# Main experiment loop
+info_text_jar = visual.TextStim(win, pos=(0, -450), text="Press 'space' to see the next bead or 'esc' after a minimum of 5 beads to make a decision.",
+                                color='white', height=30)
+
+bead_count = 0
+beads_seen = 0
+total_beads = len(beads)
+final_decision = ""
+
+# Clear event buffer to ensure responsive key presses
+event.clearEvents()
+
+while bead_count < len(beads):
+    # Show bead image
+    bead_image = visual.ImageStim(win, image=beads[bead_count], pos=(0, 100))
+    bead_image.draw()
+    beads_left_text = visual.TextStim(win, text=f"{total_beads - beads_seen} out of {total_beads} beads left", pos=(0, -300), color='white', height=30)
+    beads_left_text.draw()
+    info_text_jar.draw()
+    win.flip()
+
+    # Wait for response
+    keys = event.waitKeys(keyList=['space', 'escape'])
+    
+    # Handle response
+    if 'space' in keys:
+        beads_seen += 1
+        bead_count += 1
+    elif 'escape' in keys and beads_seen >= 5:
+        break
+
+# Decision making about the jar
+decision_text = visual.TextStim(win, text="Which jar do you think these beads are from? Press 'A' for Jar A or 'B' for Jar B",
+                                pos=(0, -350), color='white', height=30)
+jar_image.draw()  # Draw the jar image now at the end
+decision_text.draw()
+win.flip()
+
+# Record the final decision
+decision_keys = event.waitKeys(keyList=['a', 'b'])
+if 'a' in decision_keys:
+    final_decision = 'Jar A'
+elif 'b' in decision_keys:
+    final_decision = 'Jar B'
+
+# Show final decision
+result_text = visual.TextStim(win, text=f"Beads seen: {beads_seen}\nFinal decision: {final_decision}",
+                              pos=(0, -350), color='white', height=30)
+result_text.draw()
+win.flip()
+win.close()
+core.quit()
